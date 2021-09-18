@@ -6,6 +6,10 @@ PASSWORD=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attr
 # Set password for apadmin
 echo -e "$PASSWORD\n$PASSWORD" | passwd apadmin
 
+# Turn on password authentication
+sed -i "/^[^#]*PasswordAuthentication[[:space:]]no/c\PasswordAuthentication yes" /etc/ssh/sshd_config
+service sshd restart
+
 # Create workdir for this script
 mkdir -p /etc/adpushup
 
