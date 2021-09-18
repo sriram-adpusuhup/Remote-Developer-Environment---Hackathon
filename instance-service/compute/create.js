@@ -21,6 +21,7 @@ const uuid = require('uuid').v4;
  */
 function main(
     instanceName,
+    instancePassword,
     projectId = "apcentrallogging", 
     zone = "asia-south2-a",
     machineType = "e2-small",
@@ -54,8 +55,8 @@ async function createInstance() {
             {
                 // Describe the size and source image of the boot disk to attach to the instance.
                 initializeParams: {
-                diskSizeGb: "10",
-                sourceImage,
+                    diskSizeGb: "10",
+                    sourceImage,
                 },
                 autoDelete: true,
                 boot: true,
@@ -75,15 +76,25 @@ async function createInstance() {
                     ]
                 },
             ],
+            metadata: {
+                items: [
+                    {
+                        key: 'startup-script-url',
+                        value: 'https://storage.googleapis.com/logger-jar-bucket/setup.sh'
+                    },
+                    {
+                        key: 'instance-password',
+                        value: instancePassword
+                    }
+                ]
+            },
             tags: {
-                items: ['http-server', 'https-server']
-            }
+                items: ['http-server', 'https-server', 'hackathon']
+            },
         },
         project: projectId,
         zone,
     });
-
-    console.log({ response });
 
     const operationsClient = new compute.ZoneOperationsClient();
 
@@ -101,7 +112,7 @@ async function createInstance() {
 
     console.log("Instance created.");
 
-    return { ...response, instance: instanceName };
+    return { meta: response, instance: instanceName };
 
 }
 
