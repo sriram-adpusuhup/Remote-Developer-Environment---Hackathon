@@ -13,7 +13,7 @@
                     "configFileName": "adManagerSyncServiceConfig.js"
                 }
             ],
-            "cmds": ["npm install", "pm2 start pm2-process.json"]
+            "cmds": ["npm install"]
         }
     ],
     "user": {
