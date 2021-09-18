@@ -1,10 +1,14 @@
 const express = require('express')
 const uuid = require('uuid').v4;
+const cors = require('cors');
 
 const createVM = require('./compute/create');
 const getVMDetails = require('./compute/get');
 
 const app = express();
+
+app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
     return res.send('Instance Management Service UP');

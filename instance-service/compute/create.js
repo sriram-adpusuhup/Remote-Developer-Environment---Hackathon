@@ -24,7 +24,7 @@ function main(
     instancePassword,
     projectId = "apcentrallogging", 
     zone = "asia-south2-a",
-    machineType = "e2-small",
+    machineType = "e2-medium",
     sourceImage = "projects/debian-cloud/global/images/debian-10-buster-v20210916",
     networkName = "global/networks/default"
 ) {
@@ -55,7 +55,7 @@ async function createInstance() {
             {
                 // Describe the size and source image of the boot disk to attach to the instance.
                 initializeParams: {
-                    diskSizeGb: "10",
+                    diskSizeGb: "50",
                     sourceImage,
                 },
                 autoDelete: true,

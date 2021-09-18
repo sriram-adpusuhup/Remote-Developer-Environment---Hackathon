@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/compute": "3.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "pouchdb": "^7.2.2",
     "uuid": "^8.3.2"
