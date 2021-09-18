@@ -1,5 +1,8 @@
 #!/bin/bash
 cp -R configs/ /etc/adpushup
+
+chmod +x ./helpers/*
+
 ./helpers/dependencies
 cd containers && docker-compose up -d && cd ..
 ./helpers/waitUntilCbReady
