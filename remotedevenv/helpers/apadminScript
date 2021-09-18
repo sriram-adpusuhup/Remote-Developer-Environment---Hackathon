@@ -11,4 +11,4 @@ nvm use ap;
 
 npm install -g pm2;
 
-./setupProjects.py ../config.json
+./helpers/setupProjects.py ./config.json

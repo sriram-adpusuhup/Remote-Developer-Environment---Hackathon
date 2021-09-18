@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Install build essential for make
+apt-get install build-essential
 # Setup docker and docker compose
 
 if [ -n "$(lsb_release -d | grep Ubuntu)" ];
