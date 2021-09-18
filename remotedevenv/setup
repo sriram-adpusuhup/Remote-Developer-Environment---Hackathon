@@ -1,13 +1,10 @@
-# #!/bin/bash
-# mkdir -p /etc/adpushup
-# cp -R configs/ /etc/adpushup
-# ./helpers/dependencies
-cd containers && sudo docker-compose up -d && cd ..
+#!/bin/bash
+cp -R configs/ /etc/adpushup
+./helpers/dependencies
+cd containers && docker-compose up -d && cd ..
 ./helpers/waitUntilCbReady
-sudo docker exec couchbase_container bash -c "/bin/bash /home/couchbaseInit"
+docker exec couchbase_container bash -c "/bin/bash /home/couchbaseInit"
+docker cp cb_backup*.tar.gz couchbase_container:/home
+docker exec couchbase_container bash -c "/bin/bash /home/restoreCb"
 
-# TODO Restore the CB backup and setup index
-# sudo docker cp cb_backup_2021-08-30.tar.gz couchbase_container:/home/
-# sudo docker cp ./restoreCb couchbase_container:/home/
-
-# su -c "./helpers/apadminScript" apadmin
+su -c "./helpers/apadminScript" apadmin

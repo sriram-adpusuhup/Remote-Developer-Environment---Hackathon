@@ -16,6 +16,7 @@ services:
     container_name: 'couchbase_container'
     volumes:
         - ./couchbase/couchbaseInit:/home/couchbaseInit
+        - ./couchbase/restoreCb:/home/restoreCb
         - datavol:/opt/couchbase/var/lib/couchbase/data
         - indexvol:/opt/couchbase/var/lib/couchbase/indexes
     ports:

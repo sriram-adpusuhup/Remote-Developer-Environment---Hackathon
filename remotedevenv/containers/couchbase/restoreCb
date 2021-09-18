@@ -1,0 +1,10 @@
+USERNAME=administrator
+PASSWORD=password
+cd home;
+ARCHIVE_NAME=$(ls | grep .tar.gz);
+tar xvzf ${ARCHIVE_NAME}
+cd datadrive/backups/couchbase/
+DATE=$(ls)
+cd $DATE
+/opt/couchbase/bin/cbrestore -u $USERNAME -p $PASSWORD -b AppBucket -B AppBucket AppBucket/ http://localhost:8091
+/opt/couchbase/bin/cbq -u $USERNAME -p $PASSWORD -e "http://localhost:8091" --script='BUILD INDEX ON `AppBucket` ("#primary");'
