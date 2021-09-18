@@ -1,0 +1,44 @@
+#!/bin/bash
+
+USERNAME="administrator"
+PASSWORD="password"
+CLUSTER_NAME="CouchAP"
+CLUSTER_RAMSIZE=1024
+INDEX_RAMSIZE=256
+BUCKET="AppBucket"
+BUCKET_RAMSIZE=128
+BUCKET_TYPE="couchbase"
+
+
+
+/opt/couchbase/bin/couchbase-cli node-init \
+  --cluster localhost:8091 \
+  --username=$USERNAME \
+  --password=$PASSWORD \
+  --node-init-data-path='/opt/couchbase/var/lib/couchbase/data' \
+  --node-init-index-path='/opt/couchbase/var/lib/couchbase/indexes' \
+  --node-init-hostname='127.0.0.1'
+
+/opt/couchbase/bin/couchbase-cli cluster-init \
+  --cluster localhost:8091 \
+  --cluster-username=$USERNAME \
+  --cluster-password $PASSWORD \
+  --cluster-ramsize $CLUSTER_RAMSIZE \
+  --cluster-index-ramsize $INDEX_RAMSIZE \
+  --index-storage-setting default \
+  --cluster-name $CLUSTER_NAME \
+  --services "data,index,query"
+
+  /opt/couchbase/bin/couchbase-cli bucket-create \
+    --cluster localhost:8091 \
+    --username $USERNAME \
+    --password $PASSWORD \
+    --bucket $BUCKET \
+    --bucket-ramsize $BUCKET_RAMSIZE \
+    --bucket-type $BUCKET_TYPE \
+    --bucket-priority "low" \
+    --enable-index-replica 0 \
+    --enable-flush 0 \
+    --bucket-replica 0 \
+    --bucket-eviction-policy "valueOnly" \
+    --wait

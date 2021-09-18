@@ -1,0 +1,8 @@
+#!/bin/bash
+isCbReady=1
+until [ $isCbReady -eq 0 ]
+do
+    curl --silent http://localhost:8091/pools > /dev/null
+    isCbReady=$?
+done
+echo "CB READY";

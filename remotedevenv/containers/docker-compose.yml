@@ -1,0 +1,36 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq_container'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+        - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    networks:
+        - umbrellanetwork
+  couchbase:
+    image: couchbase:community-6.5.1
+    container_name: 'couchbase_container'
+    volumes:
+        - ./couchbase/couchbaseInit:/home/couchbaseInit
+        - datavol:/opt/couchbase/var/lib/couchbase/data
+        - indexvol:/opt/couchbase/var/lib/couchbase/indexes
+    ports:
+        - 8091:8091
+        - 8092:8092
+        - 8093:8093
+        - 8094:8094
+        - 11210:11210
+    networks:
+        - umbrellanetwork
+
+
+networks:
+  umbrellanetwork:
+    driver: bridge
+volumes:
+    datavol:
+    indexvol:
